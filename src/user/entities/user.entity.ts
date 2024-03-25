@@ -18,6 +18,9 @@ export class User {
   @Column()
   email: string;
 
+  @Column()
+  birthDay: Date;
+
   @CreateDateColumn()
   createdAt!: Date;
 

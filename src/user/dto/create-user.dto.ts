@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsDateString, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsAdult } from './user.validation';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -7,4 +8,8 @@ export class CreateUserDto {
 
   @IsEmail()
   email: string;
+
+  @IsDateString()
+  @IsAdult({ message: 'For registration, you  must be above 18' })
+  birthDay: string;
 }
