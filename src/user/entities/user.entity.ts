@@ -1,3 +1,4 @@
+import { IsEmail } from 'class-validator';
 import { Product } from 'src/product/entities/product.entity';
 import {
   Column,
@@ -18,6 +19,7 @@ export class User {
   name: string;
 
   @Column()
+  @IsEmail()
   email: string;
 
   @Column()
