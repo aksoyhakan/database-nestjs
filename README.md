@@ -32,6 +32,16 @@
 $ npm install
 ```
 
+## Create .env file
+
+Create an enviroment file which includes your database credential and port info.
+
+## Running the docker containers
+
+```bash
+$ docker compose up -d
+```
+
 ## Running the app
 
 ```bash
