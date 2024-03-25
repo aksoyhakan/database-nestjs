@@ -1,30 +1,24 @@
-import { Product } from 'src/product/entities/product.entity';
+import { User } from 'src/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class Product {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  @Column()
-  email: string;
-
-  @Column()
-  birthDay: Date;
-
-  @OneToMany(() => Product, (product) => product.user)
-  products: Product[];
+  @ManyToOne(() => User, (user) => user.products)
+  user: User;
 
   @CreateDateColumn()
   createdAt!: Date;
