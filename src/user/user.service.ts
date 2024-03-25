@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { GetUserResponseDto } from './dto/get-user-response.dto';
 import { UserNotFoundException } from 'src/exceptions/user-exceptions/user.notfound.exception';
+import { EmailExistinceException } from 'src/exceptions/user-exceptions/user.emailexistance.exception copy';
 
 @Injectable()
 export class UserService {
@@ -66,7 +67,15 @@ export class UserService {
   }
 
   async create(user: CreateUserDto) {
-    const newUser = this.userRepository.create(user);
+    const searchEmail = await this.userRepository.findOne({
+      where: {
+        email: user.email,
+      },
+    });
+
+    if (searchEmail) throw new EmailExistinceException(user.email);
+
+    const newUser = await this.userRepository.create(user);
     await this.userRepository.save(newUser);
 
     return {
