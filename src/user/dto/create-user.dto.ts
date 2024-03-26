@@ -12,4 +12,8 @@ export class CreateUserDto {
   @IsDateString()
   @IsAdult({ message: 'For registration, you  must be above 18' })
   birthDay: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
 }

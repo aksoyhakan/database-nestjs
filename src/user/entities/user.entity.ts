@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity({ schema: 'public', name: 'user' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,12 +18,15 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true, nullable: false })
   @IsEmail()
   email: string;
 
-  @Column()
+  @Column({ name: 'birth_day' })
   birthDay: Date;
+
+  @Column()
+  password: string;
 
   @OneToMany(() => Product, (product) => product.user)
   products: Product[];

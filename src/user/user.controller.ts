@@ -6,14 +6,20 @@ import {
   Param,
   Post,
   Put,
+  Req,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Get(':id')
   getUserById(@Param('id') id: number) {
@@ -21,7 +27,8 @@ export class UserController {
   }
 
   @Get()
-  activeUsers() {
+  activeUsers(@Req() req: Request) {
+    const token = req.headers?.authorization;
     return this.userService.activeUsers();
   }
 

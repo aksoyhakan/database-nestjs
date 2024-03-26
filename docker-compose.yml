@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   app:
+    image: node:16-alpine
     container_name: library
     build: .
     ports:
