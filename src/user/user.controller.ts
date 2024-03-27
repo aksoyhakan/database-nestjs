@@ -6,13 +6,13 @@ import {
   Param,
   Post,
   Put,
-  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { JwtGuard } from 'src/auth/guards/jwt-auth-guard';
 
 @Controller('user')
 export class UserController {
@@ -21,28 +21,32 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
+  @UseGuards(JwtGuard)
   @Get(':id')
   getUserById(@Param('id') id: number) {
     return this.userService.getById(id);
   }
 
+  @UseGuards(JwtGuard)
   @Get()
-  activeUsers(@Req() req: Request) {
-    const token = req.headers?.authorization;
+  activeUsers() {
     return this.userService.activeUsers();
   }
 
+  @UseGuards(JwtGuard)
   @Post()
   create(@Body() body: CreateUserDto) {
     return this.userService.create(body);
   }
 
+  @UseGuards(JwtGuard)
   @Put(':id')
   update(@Param('id') userId: number, @Body() body: UpdateUserDto) {
     body.id = userId;
     return this.userService.update(body);
   }
 
+  @UseGuards(JwtGuard)
   @Delete(':id')
   delete(@Param('id') userId: number) {
     return this.userService.delete(userId);
